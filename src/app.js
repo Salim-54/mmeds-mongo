@@ -10,10 +10,6 @@ import prescriptionsRoutes from './routes/prescription.route';
 import medicinesRoutes from './routes/medicine.route';
 
 
-import swaggerUi from "swagger-ui-express";
-import swaggerDoc from "./api.json";
-
-
 
 import res from "express/lib/response";
 
@@ -39,11 +35,6 @@ server.use('/api/v1/prescriptions', prescriptionsRoutes);
 server.use('/api/v1/medicines', medicinesRoutes);
 
 
-server.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerDoc, { explorer: true })
-);
 
 
 server.all('*', (req, res, next) => {
