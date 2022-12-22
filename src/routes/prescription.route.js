@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllBlogs, saveBlog, getBlogById, updateBlogById, deleteBlogById } from '../controllers/prescription.controller';
+import { getAllPrescriptions, savePrescription, getPrescriptionById, updatePrescriptionsById, deletePrescriptionById, getPrescriptionByToken } from '../controllers/prescription.controller';
 import multer from 'multer';
 
 
@@ -18,11 +18,12 @@ const uploads = multer({ storage, fileFilter });
 
 const router = express.Router();
 
-router.post('/', uploads.single("image"), saveBlog);
-router.get('/', getAllBlogs);
-router.get('/:id', getBlogById);
-router.patch('/:id', updateBlogById);
-router.delete('/:id', deleteBlogById);
+router.post('/', uploads.single("image"), savePrescription);
+router.get('/all', getAllPrescriptions);
+router.get('/:id', getPrescriptionById);
+router.patch('/:id', updatePrescriptionsById);
+router.delete('/:id', deletePrescriptionById);
+router.get("/", getPrescriptionByToken);
 
 
 

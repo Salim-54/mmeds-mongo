@@ -35,7 +35,10 @@ server.use('/api/v1/prescriptions', prescriptionsRoutes);
 server.use('/api/v1/medicines', medicinesRoutes);
 
 
-
+server.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+});
 
 server.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
