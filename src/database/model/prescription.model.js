@@ -7,16 +7,26 @@ const PrescriptionSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['sensitive', 'numeric'],
-        default: 'sensitive'
+        enum: ['sensitive', 'generic'],
+        default: 'generic'
     },
     doctor: {
         type: String,
-        required: true
+        required: true,
+        default: "MMEDS Doctor's crew",
     },
     institution: {
         type: String,
-        required: true
+        required: true,
+        default: 'Megga-meds',
+    },
+    opayId: {
+        type: String,
+        required: false,
+    },
+    transactionId: {
+        type: String,
+        required: false,
     },
     payment: {
         type: String,

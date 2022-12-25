@@ -1,5 +1,34 @@
 import Medicine from '../database/model/medicines.model';
 import Prescription from '../database/model/prescription.model';
+import { handleCreate } from "../helper/general.helper.js";
+
+
+
+exports.createMedicine = async(req, res) => {
+    const {
+        medName,
+        medNumber,
+        medPrice,
+        medComment,
+        pattern
+    } = req.body;
+    try {
+
+        const newMedicine = {
+            medName,
+            medNumber,
+            medPrice,
+            medComment,
+            pattern
+        };
+        const createdMedicine = await handleCreate(Medicine, newMedicine, res);
+        createdMedicine ? res.status(201).json(createdMedicine) : res.status(500).json({ message: "Internal server error!" })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "ooops! something went wrong!" })
+    }
+
+};
 
 exports.saveMedicine = async(req, res, next) => {
 

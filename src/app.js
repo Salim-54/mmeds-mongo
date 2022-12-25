@@ -9,14 +9,11 @@ import express from 'express';
 import prescriptionsRoutes from './routes/prescription.route';
 import medicinesRoutes from './routes/medicine.route';
 import authRoutes from './routes/auth.route'
+import transactionsRoutes from './routes/buying.route'
+import opayUrl from './routes/opay.route'
 
-const admin = require('firebase-admin');
-const serviceAccount = require('../mmeds.json');
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.PORT
-});
+
 
 const server = express();
 server.use(cors());
@@ -37,6 +34,8 @@ server.use((req, res, next) => {
 server.use('/api/v1/prescriptions', prescriptionsRoutes);
 server.use('/api/v1/medicines', medicinesRoutes);
 server.use('/auth', authRoutes);
+server.use('/api/v1/transaction', transactionsRoutes);
+server.use('/api/v1/callback', opayUrl);
 
 
 

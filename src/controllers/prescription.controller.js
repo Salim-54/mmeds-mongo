@@ -1,32 +1,67 @@
 import Prescription from '../database/model/prescription.model';
 import AppError from '../utils/appError';
-import fileUpload from '../utils/fileUpload';
+// import fileUpload from '../utils/fileUpload';
+import { handleCreate } from "../helper/general.helper.js";
 
+import tokenGenerator from '../utils/tokenGenerator';
 import catchAsync from '../utils/catchAsync'
 
 
-exports.savePrescription = catchAsync(async(req, res, next) => {
 
-    let prescription = (req.body)
+// exports.savePrescription = catchAsync(async(req, res, next) => {
 
-    if (req.file) {
-        req.body.image = await fileUpload(req);
-    } else {
-        req.body.image =
-            "https://res.cloudinary.com/salim-atlp-brand/image/upload/v1647272711/article_vmtmzu.png";
+//     let prescription = (req.body)
+
+//     if (req.file) {
+//         req.body.image = await fileUpload(req);
+//     } else {
+//         req.body.image =
+//             "https://res.cloudinary.com/salim-atlp-brand/image/upload/v1647272711/article_vmtmzu.png";
+//     }
+
+//     let newPrescription = await new Prescription(prescription);
+//     newPrescription.save();
+
+
+//     res.status(201).json({
+//         status: 'success',
+//         data: {
+//             prescription: newPrescription
+//         }
+//     });
+// });
+
+
+exports.savePrescription = async(req, res) => {
+    const {
+        type,
+        doctor,
+        institution,
+        payment,
+        patient
+    } = req.body;
+    try {
+
+
+        const generatedToken = tokenGenerator(1, 100000);
+
+        const newPrescription = {
+            type,
+            doctor,
+            institution,
+            payment,
+            token: generatedToken,
+            patient,
+        };
+
+        const createdPrescription = await handleCreate(Prescription, newPrescription, res);
+        createdPrescription ? res.status(201).json(createdPrescription) : res.status(500).json({ message: "Internal server error!" })
+    } catch (error) {
+        return res.status(500).json({ message: "ooops! something went wrong!" })
     }
 
-    let newPrescription = await new Prescription(prescription);
-    newPrescription.save();
+};
 
-
-    res.status(201).json({
-        status: 'success',
-        data: {
-            prescription: newPrescription
-        }
-    });
-});
 
 
 exports.getAllPrescriptions = async(req, res) => {

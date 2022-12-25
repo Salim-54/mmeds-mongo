@@ -5,6 +5,14 @@ const MedicineSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    medComment: {
+        type: String,
+        required: true
+    },
+    medPrice: {
+        type: Number,
+        required: true
+    },
     medNumber: {
         type: Number,
         required: true
