@@ -29,13 +29,12 @@ exports.startMedTransaction = async(req, res) => {
                 amount: medToBuy.medPrice,
                 organizationId: "9c16b914-cf9e-4369-b18e-642ebcc46016",
                 description: "Payment",
-                callbackUrl: "http://3.91.178.169/api/v1/callback",
+                callbackUrl: "https://webhook.site/801671e2-9f17-4856-b9f1-01f9707cbba9",
                 transactionId: transactionId
             }
             axios.post('https://opay-api.oltranz.com/opay/paymentrequest', paymentObject)
                 .then((response) => {
                     const resp = response.data;
-                    console.log(resp);
                     const newPayment = {
                         buyerName: `${req.user.firstName +" " +  req.user.lastName  }`,
                         paidAmount: medToBuy.medPrice,
