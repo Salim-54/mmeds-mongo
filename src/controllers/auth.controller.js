@@ -45,12 +45,21 @@ const httpRegisterUser = async(req, res) => {
         const createdUser = await handleCreateUser(User, newUser, res);
 
         createdUser ? res.status(201).json({
+
             _id: createdUser._id,
             email: createdUser.email,
             lastName: createdUser.lastName,
             firstName: createdUser.firstName,
             role: createdUser.role,
             phone: createdUser.phone,
+            token: generateToken({
+                _id: createdUser._id,
+                email: createdUser.email,
+                role: createdUser.role,
+                lastName: createdUser.lastName,
+                firstName: createdUser.firstName,
+                phone: createdUser.phone
+            })
         }) : res.status(500).json({ message: "Internal server error!" })
     } catch (error) {
         return res.status(500).json({ message: "ooops! something went wrong!" })
@@ -71,6 +80,7 @@ const httpLoginUser = expressAsyncHandler(async(req, res) => {
                 lastName: foundUser.lastName,
                 firstName: foundUser.firstName,
                 role: foundUser.role,
+                phone: foundUser.phone,
                 token: generateToken({
                     _id: foundUser._id,
                     email: foundUser.email,
