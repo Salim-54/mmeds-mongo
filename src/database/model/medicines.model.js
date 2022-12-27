@@ -7,13 +7,22 @@ const MedicineSchema = new mongoose.Schema({
     },
     medComment: {
         type: String,
-        required: true
+        required: false
     },
     medPrice: {
         type: Number,
         required: true
     },
+    medPicture: {
+        type: String,
+        required: false,
+        default: "https://res.cloudinary.com/salim-atlp-brand/image/upload/v1672150488/mmeds/pil_typxzv.png"
+    },
     medNumber: {
+        type: Number,
+        required: true
+    },
+    medPin: {
         type: Number,
         required: true
     },

@@ -9,7 +9,9 @@ exports.createMedicine = async(req, res) => {
         medName,
         medNumber,
         medPrice,
+        medPicture,
         medComment,
+        medPin,
         pattern
     } = req.body;
     try {
@@ -18,6 +20,8 @@ exports.createMedicine = async(req, res) => {
             medName,
             medNumber,
             medPrice,
+            medPicture,
+            medPin,
             medComment,
             pattern
         };
