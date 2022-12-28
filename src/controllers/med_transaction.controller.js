@@ -19,6 +19,8 @@ exports.startMedTransaction = async(req, res) => {
             const transactionId = generateTransactionId();
             const newPrescription = {
                 token: generatedToken,
+                patientId: req.user._id,
+
                 transactionId: transactionId,
                 patient: `${req.user.firstName +" " +  req.user.lastName  }`,
             };

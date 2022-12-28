@@ -38,7 +38,7 @@ exports.savePrescription = async(req, res) => {
         doctor,
         institution,
         payment,
-        patient
+        patient,
     } = req.body;
     try {
 
@@ -100,6 +100,26 @@ exports.getPrescriptionByToken = catchAsync(async(req, res, next) => {
 
         });
         return next(new AppError('No prescription found with that token', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: prescription
+    });
+});
+
+exports.getPrescriptionByUserId = catchAsync(async(req, res, next) => {
+    // print(req.user._id);
+
+    const prescription = await Prescription.find({ patientId: req.user._id }).populate("medicines");
+
+    if (!prescription) {
+
+        res.status(404).json({
+            message: 'Actually that was bad!',
+
+        });
+        return next(new AppError('No prescription found with that user', 404));
     }
 
     res.status(200).json({

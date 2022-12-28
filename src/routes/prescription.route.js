@@ -1,5 +1,6 @@
 import express from 'express';
-import { getAllPrescriptions, savePrescription, getPrescriptionById, updatePrescriptionsById, deletePrescriptionById, getPrescriptionByToken } from '../controllers/prescription.controller';
+import { getAllPrescriptions, savePrescription, getPrescriptionById, updatePrescriptionsById, deletePrescriptionById, getPrescriptionByToken, getPrescriptionByUserId } from '../controllers/prescription.controller';
+import authenticated from '../middleware/protection';
 import multer from 'multer';
 
 
@@ -20,6 +21,7 @@ const router = express.Router();
 
 router.post('/', uploads.single("image"), savePrescription);
 router.get('/all', getAllPrescriptions);
+router.get('/user/', authenticated, getPrescriptionByUserId);
 router.get('/:id', getPrescriptionById);
 router.patch('/:id', updatePrescriptionsById);
 router.delete('/:id', deletePrescriptionById);

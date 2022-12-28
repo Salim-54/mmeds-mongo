@@ -37,6 +37,10 @@ const PrescriptionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    patientId: {
+        type: String,
+        required: false,
+    },
     medicines: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Medicine"
